@@ -1,0 +1,8 @@
+{
+  "routes": [
+    { "path": "/", "title": "ZidWix — Creative Technology Studio" },
+    { "path": "/about", "title": "About — ZidWix" },
+    { "path": "/work", "title": "Work — ZidWix" },
+    { "path": "/contact", "title": "Contact — ZidWix" }
+  ]
+}
