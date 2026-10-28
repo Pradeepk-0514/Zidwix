@@ -1,0 +1,104 @@
+/* Modern Framer Motion Journey timeline. */
+.about-website-reference .journey-modern-section {
+  position: relative;
+  height: 430vh;
+  min-height: 2600px;
+  background: radial-gradient(circle at 74% 38%, rgba(197,31,93,.09), transparent 28%), linear-gradient(135deg, #F7F8FA 0%, #EEF3F7 52%, #F8F5F8 100%);
+  color: #141D26;
+  isolation: isolate;
+}
+.about-website-reference .journey-modern-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 650px;
+  overflow: hidden;
+  padding: clamp(74px, 9vh, 108px) clamp(5vw, 8vw, 128px) clamp(34px, 5vh, 64px);
+  box-sizing: border-box;
+}
+.about-website-reference .journey-modern-sticky::before,
+.about-website-reference .journey-modern-sticky::after { position: absolute; content: ""; pointer-events: none; }
+.about-website-reference .journey-modern-sticky::before { inset: 0; z-index: -2; opacity: .3; background-image: linear-gradient(rgba(36,52,71,.075) 1px, transparent 1px), linear-gradient(90deg, rgba(36,52,71,.075) 1px, transparent 1px); background-size: 42px 42px; mask-image: linear-gradient(90deg, #000, transparent 78%); }
+.about-website-reference .journey-modern-sticky::after { z-index: -1; right: 5%; bottom: 8%; width: 36vw; height: 22vw; border-radius: 50%; background: rgba(197,31,93,.08); filter: blur(62px); }
+.about-website-reference .journey-modern-orb { position: absolute; z-index: -1; width: clamp(150px, 18vw, 280px); aspect-ratio: 1; border: 1px solid rgba(197,31,93,.2); border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.95), rgba(225,137,184,.22) 42%, rgba(197,31,93,.03) 72%, transparent 74%); box-shadow: 0 0 80px rgba(197,31,93,.2), inset 0 0 35px rgba(255,255,255,.8); transform: translate(-50%, -50%); transition: left .5s ease, top .5s ease; }
+.about-website-reference .journey-modern-intro { position: absolute; z-index: 4; top: clamp(88px, 15vh, 156px); left: clamp(5vw, 8vw, 128px); width: min(31vw, 430px); }
+.about-website-reference .journey-modern-kicker { display: inline-flex; gap: 14px; align-items: center; color: #C51F5D; font-size: 11px; font-weight: 850; letter-spacing: .22em; }
+.about-website-reference .journey-modern-kicker i { width: 54px; height: 1px; background: rgba(197,31,93,.62); }
+.about-website-reference .journey-modern-intro h2 { margin: 22px 0 20px; color: #172D40; font-size: clamp(42px, 5.2vw, 82px); font-weight: 950; letter-spacing: -.075em; line-height: .86; text-transform: uppercase; }
+.about-website-reference .journey-modern-intro h2 span { color: #C51F5D; }
+.about-website-reference .journey-modern-intro h2 .journey-modern-dot { color: #C51F5D; }
+.about-website-reference .journey-modern-intro p { max-width: 340px; margin: 0; color: #627184; font-size: 14px; line-height: 1.65; }
+.about-website-reference .journey-modern-promise { position: relative; margin-top: 32px; padding-left: 50px; color: #708091; font-size: 9px; font-weight: 850; letter-spacing: .18em; line-height: 1.8; }
+.about-website-reference .journey-modern-promise i { position: absolute; top: 7px; left: 0; width: 33px; height: 2px; background: #C51F5D; }
+.about-website-reference .journey-modern-scroll-cue { display: inline-flex; align-items: center; gap: 8px; margin-top: 45px; color: rgba(36,52,71,.5); font-size: 9px; font-weight: 850; letter-spacing: .16em; }
+.about-website-reference .journey-modern-rail { position: absolute; z-index: 3; top: 20%; right: clamp(6vw, 10vw, 150px); bottom: 17%; width: 2px; }
+.about-website-reference .journey-modern-rail-base, .about-website-reference .journey-modern-rail-progress { position: absolute; inset: 0; transform-origin: top; }
+.about-website-reference .journey-modern-rail-base { background: rgba(36,52,71,.15); }
+.about-website-reference .journey-modern-rail-progress { background: linear-gradient(180deg, #C51F5D, #E4A4D0 55%, #8F86D8); box-shadow: 0 0 16px rgba(197,31,93,.38); }
+.about-website-reference .journey-modern-node { position: absolute; left: 50%; display: grid; place-items: center; width: 14px; height: 14px; border: 1px solid rgba(36,52,71,.22); border-radius: 50%; background: #F7F8FA; transform: translate(-50%, -50%); transition: .35s ease; }
+.about-website-reference .journey-modern-node::after { position: absolute; inset: -7px; border: 1px solid rgba(197,31,93,.3); border-radius: inherit; content: ""; opacity: 0; transform: scale(.7); }
+.about-website-reference .journey-modern-node span { position: absolute; right: 25px; color: #748493; font-size: 9px; font-weight: 850; letter-spacing: .08em; white-space: nowrap; }
+.about-website-reference .journey-modern-node.is-reached { border-color: #C51F5D; background: #C51F5D; box-shadow: 0 0 0 5px rgba(197,31,93,.11), 0 0 18px rgba(197,31,93,.45); }
+.about-website-reference .journey-modern-node.is-current::after { opacity: 1; animation: journey-node-pulse 1.8s ease-out infinite; }
+.about-website-reference .journey-modern-node.is-current span { color: #C51F5D; }
+.about-website-reference .journey-modern-list { position: absolute; inset: 0; display: block; height: auto; margin: 0; padding: 0; list-style: none; }
+.about-website-reference .journey-modern-item { position: absolute; top: 31%; left: 49%; display: block; width: min(35vw, 460px); padding: 0; }
+.about-website-reference .journey-modern-item:nth-child(1),
+.about-website-reference .journey-modern-item:nth-child(2),
+.about-website-reference .journey-modern-item:nth-child(3),
+.about-website-reference .journey-modern-item:nth-child(4) { top: 31%; left: 49%; z-index: 4; }
+.about-website-reference .journey-modern-item.is-current { z-index: 12; }
+.about-website-reference .journey-modern-card { position: relative; width: 100%; min-height: 230px; padding: 25px 28px 21px; border: 1px solid rgba(255,255,255,.9); border-radius: 22px; box-sizing: border-box; overflow: hidden; background: linear-gradient(140deg, #FFFFFF 0%, #FFF4FA 55%, #F7D8E8 100%); box-shadow: 0 24px 58px rgba(20,29,38,.16), 0 0 0 rgba(197,31,93,0), inset 0 1px rgba(255,255,255,1); -webkit-backdrop-filter: blur(16px) saturate(135%); backdrop-filter: blur(16px) saturate(135%); color: #172D40; transform-style: preserve-3d; transition: box-shadow .45s ease, border-color .45s ease, background .45s ease; }
+.about-website-reference .journey-modern-item:nth-child(2) .journey-modern-card, .about-website-reference .journey-modern-item:nth-child(4) .journey-modern-card { background: linear-gradient(145deg, #3E5F79 0%, #243447 56%, #C51F5D 170%); border-color: rgba(255,255,255,.52); color: #F7F8FA; box-shadow: 0 25px 62px rgba(20,29,38,.28), 0 0 0 rgba(197,31,93,0), inset 0 1px rgba(255,255,255,.22); }
+.about-website-reference .journey-modern-item.is-current .journey-modern-card { border-color: rgba(197,31,93,.72); box-shadow: 0 28px 64px rgba(20,29,38,.22), 0 0 34px rgba(197,31,93,.38), 0 0 78px rgba(197,31,93,.2), inset 0 1px rgba(255,255,255,.96); }
+.about-website-reference .journey-modern-item:nth-child(2).is-current .journey-modern-card, .about-website-reference .journey-modern-item:nth-child(4).is-current .journey-modern-card { background: linear-gradient(145deg, #496F8D 0%, #243447 52%, #C51F5D 145%); box-shadow: 0 30px 70px rgba(20,29,38,.36), 0 0 38px rgba(197,31,93,.52), 0 0 88px rgba(197,31,93,.25), inset 0 1px rgba(255,255,255,.3); }
+.about-website-reference .journey-modern-card::before { position: absolute; inset: 0; content: ""; pointer-events: none; background: linear-gradient(120deg, rgba(255,255,255,.35), transparent 38%); }
+.about-website-reference .journey-modern-card-topline { display: flex; align-items: center; gap: 12px; }
+.about-website-reference .journey-modern-badge { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(197,31,93,.27); border-radius: 50%; color: #C51F5D; background: rgba(255,247,251,.8); box-shadow: 0 0 0 7px rgba(197,31,93,.06); transition: transform .35s ease, box-shadow .35s ease; }
+.about-website-reference .journey-modern-item:nth-child(2) .journey-modern-badge, .about-website-reference .journey-modern-item:nth-child(4) .journey-modern-badge { background: rgba(247,248,250,.1); border-color: rgba(247,248,250,.3); color: #F09BCB; }
+.about-website-reference .journey-modern-card:hover .journey-modern-badge { transform: translateY(-3px) rotate(-7deg); box-shadow: 0 0 0 9px rgba(197,31,93,.08), 0 0 22px rgba(197,31,93,.18); }
+.about-website-reference .journey-modern-year { color: #C51F5D; font-size: 18px; font-weight: 950; letter-spacing: .02em; }
+.about-website-reference .journey-modern-item:nth-child(2) .journey-modern-year, .about-website-reference .journey-modern-item:nth-child(4) .journey-modern-year { color: #F09BCB; }
+.about-website-reference .journey-modern-card h3 { margin: 18px 0 9px; color: #172D40; font-size: clamp(20px, 1.65vw, 28px); font-weight: 900; letter-spacing: -.045em; line-height: 1; }
+.about-website-reference .journey-modern-card p { margin: 0; color: #657687; font-size: 12px; line-height: 1.52; }
+.about-website-reference .journey-modern-item:nth-child(2) .journey-modern-card h3, .about-website-reference .journey-modern-item:nth-child(4) .journey-modern-card h3 { color: #F7F8FA; }
+.about-website-reference .journey-modern-item:nth-child(2) .journey-modern-card p, .about-website-reference .journey-modern-item:nth-child(4) .journey-modern-card p { color: rgba(247,248,250,.72); }
+.about-website-reference .journey-modern-card footer { display: flex; align-items: center; gap: 7px; margin-top: 18px; color: #9B6B91; font-size: 8px; font-weight: 900; letter-spacing: .14em; }
+.about-website-reference .journey-modern-item:nth-child(2) .journey-modern-card footer, .about-website-reference .journey-modern-item:nth-child(4) .journey-modern-card footer { color: #D9A9C3; }
+.about-website-reference .journey-modern-card footer i { width: 22px; height: 2px; background: #C51F5D; }
+.about-website-reference .journey-modern-card footer svg { margin-left: auto; color: #C51F5D; }
+.about-website-reference .journey-modern-status { position: absolute; left: clamp(5vw, 8vw, 128px); bottom: 6%; display: flex; align-items: center; gap: 10px; color: #748493; font-size: 10px; font-weight: 850; letter-spacing: .12em; }
+.about-website-reference .journey-modern-status span { color: #C51F5D; }
+.about-website-reference .journey-modern-status i { width: 26px; height: 1px; background: rgba(36,52,71,.25); }
+.about-website-reference .journey-modern-endnote { position: absolute; right: 5%; bottom: 4%; color: #8793A0; font-size: 8px; font-weight: 850; letter-spacing: .18em; line-height: 1.7; text-align: right; }
+.about-website-reference .journey-modern-endnote i { display: block; width: 25px; height: 2px; margin: 0 0 7px auto; background: #C51F5D; }
+@keyframes journey-node-pulse { 0% { opacity: .8; transform: scale(.7); } 70%, 100% { opacity: 0; transform: scale(1.8); } }
+@media (max-width: 900px) and (min-width: 761px) {
+  .about-website-reference .journey-modern-intro { width: 30vw; }
+  .about-website-reference .journey-modern-item { left: 47%; width: min(40vw, 390px); }
+  .about-website-reference .journey-modern-item:nth-child(1), .about-website-reference .journey-modern-item:nth-child(2), .about-website-reference .journey-modern-item:nth-child(3), .about-website-reference .journey-modern-item:nth-child(4) { left: 47%; }
+}
+@media (max-width: 760px) {
+  .about-website-reference .journey-modern-section { height: 390vh; min-height: 2350px; }
+  .about-website-reference .journey-modern-sticky { min-height: 620px; padding: 70px 22px 30px 66px; }
+  .about-website-reference .journey-modern-intro { top: 72px; left: 66px; width: calc(100% - 88px); }
+  .about-website-reference .journey-modern-kicker { font-size: 8px; gap: 8px; }
+  .about-website-reference .journey-modern-kicker i { width: 24px; }
+  .about-website-reference .journey-modern-intro h2 { margin: 15px 0 13px; font-size: clamp(32px, 10vw, 48px); }
+  .about-website-reference .journey-modern-intro p { max-width: 250px; font-size: 11px; line-height: 1.48; }
+  .about-website-reference .journey-modern-promise, .about-website-reference .journey-modern-scroll-cue { display: none; }
+  .about-website-reference .journey-modern-rail { top: 29%; right: auto; left: 29px; bottom: 10%; width: 2px; }
+  .about-website-reference .journey-modern-node span { right: auto; left: 20px; font-size: 8px; }
+  .about-website-reference .journey-modern-item, .about-website-reference .journey-modern-item--left, .about-website-reference .journey-modern-item--right { width: calc(100% - 38px); padding: 0; }
+  .about-website-reference .journey-modern-item,
+  .about-website-reference .journey-modern-item:nth-child(1),
+  .about-website-reference .journey-modern-item:nth-child(2),
+  .about-website-reference .journey-modern-item:nth-child(3),
+  .about-website-reference .journey-modern-item:nth-child(4) { top: 36%; left: 25px; }
+  .about-website-reference .journey-modern-card { min-height: 205px; padding: 19px 18px 17px; border-radius: 17px; }
+  .about-website-reference .journey-modern-card h3 { margin-top: 13px; font-size: 21px; }
+  .about-website-reference .journey-modern-card p { font-size: 11px; }
+  .about-website-reference .journey-modern-status { left: 66px; bottom: 3%; font-size: 8px; }
+  .about-website-reference .journey-modern-endnote { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .about-website-reference .journey-modern-orb { transition: none; } .about-website-reference .journey-modern-node.is-current::after { animation: none; } }
