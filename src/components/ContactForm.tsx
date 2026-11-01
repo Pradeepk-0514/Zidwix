@@ -26,6 +26,8 @@ export default function ContactForm({ idPrefix, className = '' }: ContactFormPro
   const [values, setValues] = useState({ name: '', email: '', message: '' })
   const [invalid, setInvalid] = useState<Record<string, boolean>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [draftHref, setDraftHref] = useState('')
   const ids = {
     name: `${idPrefix}-full-name`,
@@ -34,7 +36,7 @@ export default function ContactForm({ idPrefix, className = '' }: ContactFormPro
     message: `${idPrefix}-project-message`,
   }
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const form = event.currentTarget
     const errors = {
@@ -64,9 +66,31 @@ export default function ContactForm({ idPrefix, className = '' }: ContactFormPro
     ].join('\n')
     const href = `mailto:hello@zidwix.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     setDraftHref(href)
-    setSubmitted(true)
-    // Use the visitor's email client; they review and send the message themselves.
-    window.location.href = href
+    setSubmitError('')
+    setSubmitting(true)
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: values.name.trim(),
+          email: values.email.trim(),
+          company,
+          need,
+          budget,
+          message: values.message.trim(),
+        }),
+      })
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({})) as { error?: string }
+        throw new Error(result.error || 'The enquiry could not be delivered.')
+      }
+      setSubmitted(true)
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'The enquiry could not be delivered. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -102,8 +126,9 @@ export default function ContactForm({ idPrefix, className = '' }: ContactFormPro
         <div className="sm contact-form__counter" aria-live="polite">{values.message.length}/500</div>
       </div>
       <div className="contact-form__submit">
-        <button className="btn" type="submit"><Send className="i" /> Send Enquiry <ArrowRight className="i" /></button>
-        {submitted && <p className="sm contact-form__success" role="status">Your enquiry is ready in your email app. Review it and press Send to deliver it. If the draft didn’t open, <a href={draftHref}>open it again</a> or email <a href="mailto:hello@zidwix.com">hello@zidwix.com</a>.</p>}
+        <button className="btn" type="submit" disabled={submitting}><Send className="i" /> {submitting ? 'Sending…' : 'Send Enquiry'} <ArrowRight className="i" /></button>
+        {submitted && <p className="sm contact-form__success" role="status">Your enquiry has been sent to Zidwix. We’ll get back to you within 24 hours.</p>}
+        {submitError && <p className="sm contact-form__error" role="alert">{submitError} <a href={draftHref}>Open a pre-filled email draft instead.</a></p>}
       </div>
     </form>
   )

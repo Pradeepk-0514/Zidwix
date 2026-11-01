@@ -1,7 +1,7 @@
 import { Component, useCallback, useLayoutEffect, useRef, useState, lazy, Suspense, type ReactNode } from 'react'
 import { NavLink, Link, Routes, Route, useLocation } from 'react-router-dom'
 import { ArrowRight, Menu, X } from 'lucide-react'
-import { gsap, ScrollTrigger, reduced, scrollTop, scrollToTarget, useSmoothScroll } from './lib/smooth'
+import { gsap, ScrollTrigger, reduced, refreshSmoothScroll, scrollTop, scrollToTarget, useSmoothScroll } from './lib/smooth'
 import { Footer } from './components/ui'
 import ContactModal from './components/ContactModal'
 import Home from './pages/Home'
@@ -63,6 +63,10 @@ export default function App() {
   useLayoutEffect(() => {
     let anchorRaf = 0
     let attempts = 0
+    let refreshTimer = 0
+    const refresh = () => refreshSmoothScroll()
+    requestAnimationFrame(refresh)
+    refreshTimer = window.setTimeout(refresh, 120)
     if (hash) {
       const locateAnchor = () => {
         const target = document.getElementById(decodeURIComponent(hash.slice(1)))
@@ -75,7 +79,7 @@ export default function App() {
       }
       anchorRaf = requestAnimationFrame(locateAnchor)
     } else scrollTop()
-    return () => cancelAnimationFrame(anchorRaf)
+    return () => { cancelAnimationFrame(anchorRaf); window.clearTimeout(refreshTimer) }
   }, [pathname, hash])
   return (<><Header onOpenContactModal={openContactModal} />{contactModalOpen && <ContactModal onClose={closeContactModal} />}<main ref={main}><RouteErrorBoundary key={pathname}><Suspense fallback={<PageLoading />}><Routes>
     <Route path="/" element={<Home />} /><Route path="/solutions" element={<Solutions />} /><Route path="/work" element={<Work />} /><Route path="/about" element={<About />} /><Route path="/contact" element={<Contact />} /><Route path="/privacy-policy" element={<LegalPage type="privacy" />} /><Route path="/terms-of-service" element={<LegalPage type="terms" />} /><Route path="*" element={<Home />} />

@@ -56,9 +56,8 @@ export default function ContactModal({ onClose }: ContactModalProps) {
 
   return createPortal(
     <div className="contact-modal-backdrop" onMouseDown={event => { if (event.target === event.currentTarget) onClose() }}>
-      <section ref={dialogRef} className="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" aria-describedby="contact-modal-description" tabIndex={-1}>
+      <section ref={dialogRef} className="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" aria-describedby="contact-modal-description" tabIndex={-1} onWheel={event => event.stopPropagation()} onTouchMove={event => event.stopPropagation()}>
         <button className="contact-modal__close" type="button" aria-label="Close contact form" onClick={onClose}><X aria-hidden="true" /></button>
-        <div className="eyebrow contact-modal__eyebrow">Start a conversation</div>
         <h2 id="contact-modal-title">Let’s talk about your project.</h2>
         <p id="contact-modal-description" className="contact-modal__description">Share a few details and we’ll get back to you within 24 hours.</p>
         <ContactForm idPrefix="modal" className="contact-modal__form" />

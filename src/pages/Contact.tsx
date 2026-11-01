@@ -9,6 +9,8 @@ const BENEFITS = [
   ['users', 'Business Focused', 'We work with businesses of all sizes, from startups to established companies.'],
 ] as const
 
+const EMAIL_HREF = `mailto:hello@zidwix.com?subject=${encodeURIComponent('Project enquiry for Zidwix')}&body=${encodeURIComponent('Hi Zidwix,\n\nI would like to discuss a project.\n\n')}`
+
 export default function Contact() {
   const [copied, setCopied] = useState(false)
   return (<>
@@ -28,7 +30,7 @@ export default function Contact() {
     <section className="contact-questions-wrap"><div className="contact-questions">
       <div className="contact-questions__copy"><div className="eyebrow contact-questions__eyebrow">Still have questions?</div><h2>Let’s connect,<br /><span>your way.</span></h2><p>Not ready to fill out the form? Reach out through one of our official channels. We’re happy to hear about your ideas and challenges.</p></div>
       <div className="contact-questions__channels" aria-label="Contact options">
-        <div className="contact-channel"><span className="contact-channel__icon"><Mail className="i" /></span><div className="contact-channel__body"><h3>Email us</h3><p>For project enquiries and business discussions.</p><div className="contact-channel__actions"><a href="mailto:hello@zidwix.com">hello@zidwix.com</a><button type="button" aria-label={copied ? 'Email copied' : 'Copy email'} onClick={() => { navigator.clipboard?.writeText('hello@zidwix.com'); setCopied(true) }}>{copied ? 'Copied' : <Copy className="i" />}</button></div></div><a className="contact-channel__arrow" href="mailto:hello@zidwix.com" aria-label="Email Zidwix"><ArrowRight className="i" /></a></div>
+        <div className="contact-channel"><span className="contact-channel__icon"><Mail className="i" /></span><div className="contact-channel__body"><h3>Email us</h3><p>For project enquiries and business discussions.</p><div className="contact-channel__actions"><a href={EMAIL_HREF}>hello@zidwix.com</a><button type="button" aria-label={copied ? 'Email copied' : 'Copy email'} onClick={() => { navigator.clipboard?.writeText('hello@zidwix.com'); setCopied(true) }}>{copied ? 'Copied' : <Copy className="i" />}</button></div></div><a className="contact-channel__arrow" href={EMAIL_HREF} aria-label="Email Zidwix"><ArrowRight className="i" /></a></div>
         <div className="contact-channel"><span className="contact-channel__icon"><Linkedin className="i" /></span><div className="contact-channel__body"><h3>Connect on LinkedIn</h3><p>Follow Zidwix and connect with us professionally.</p><a href="https://www.linkedin.com/company/zidwix/" target="_blank" rel="noopener noreferrer">linkedin.com/company/zidwix ↗</a></div><a className="contact-channel__arrow" href="https://www.linkedin.com/company/zidwix/" target="_blank" rel="noopener noreferrer" aria-label="Open Zidwix on LinkedIn"><ArrowRight className="i" /></a></div>
       </div>
     </div></section>

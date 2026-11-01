@@ -182,6 +182,36 @@ footer .footer-brand:hover .footer-logo{transform:translateY(-2px)}
 @media(max-width:520px){.why-layout{gap:24px}.why-intro{padding-left:17px}.why-intro .lead{margin:14px 0 22px}.why-card{min-height:176px;padding:15px;border-radius:11px}.why-card__top{margin-bottom:16px}.why-card__top>svg.i{width:32px;height:32px;padding:7px}.why-card h3{font-size:.88rem}.why-card p{font-size:.72rem;line-height:1.45}.story-step{min-height:184px;padding:14px;border-radius:11px}.story-step__number{margin-bottom:12px}.story-step .ico{width:35px;height:35px;margin-bottom:11px}.story-step h3{font-size:.94rem}.story-step p{font-size:.72rem;line-height:1.4}}
 @media(prefers-reduced-motion:reduce){.story-step,.why-card,.why-card::before,footer .fg>*,footer .fb,footer .footer-logo{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}}
 
+/* About purpose cards: dark technical reveal panels with a fixed footprint. */
+.purpose-section{background:linear-gradient(145deg,#0e0e10,#1c1d20 58%,#111214)!important;color:#f4f7fb;overflow:hidden}
+.purpose-section__heading{width:100%;max-width:1440px;margin:0 auto 30px}.purpose-section__heading .eyebrow{color:#b7c0ce}.purpose-section__heading h2{max-width:720px;color:#f6f8fb}
+.purpose-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,26px);width:100%;max-width:1440px;margin:0 auto}
+.purpose-card{position:relative;isolation:isolate;min-height:390px;padding:0;overflow:hidden;border:1px solid rgba(225,225,228,.2);border-radius:18px;background:#111214;color:#f4f7fb;text-align:left;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.08),0 24px 70px rgba(0,0,0,.2);transition:border-color .35s ease,box-shadow .35s ease,transform .35s ease}
+.purpose-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.7);box-shadow:inset 0 1px rgba(255,255,255,.1),0 30px 90px rgba(0,0,0,.34),0 0 38px rgba(255,255,255,.08)}
+.purpose-card:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.purpose-card__front,.purpose-card__back{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(24px,4vw,52px);transition:opacity .55s ease,transform .7s cubic-bezier(.2,.75,.25,1),clip-path .7s cubic-bezier(.2,.75,.25,1)}
+.purpose-card__front{justify-content:flex-start;overflow:hidden;background:linear-gradient(145deg,rgba(24,24,26,.68),rgba(11,11,12,.96))}
+.purpose-card--mission .purpose-card__front{background:linear-gradient(145deg,rgba(37,37,40,.68),rgba(10,10,11,.98))}
+.purpose-card__front::after{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(120deg,transparent 0 38%,rgba(255,255,255,.12) 46%,transparent 54%);transform:translateX(-120%);transition:transform 1.1s ease}
+.purpose-card:hover .purpose-card__front::after{transform:translateX(120%)}
+.purpose-card__cover{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(.78);opacity:.56;mix-blend-mode:luminosity;transform:scale(1.02);transition:transform .8s ease,opacity .5s ease}
+.purpose-card:hover .purpose-card__cover{transform:scale(1.07);opacity:.68}
+.purpose-card__grid{position:absolute;z-index:1;inset:0;opacity:.3;background-image:linear-gradient(rgba(225,225,228,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(225,225,228,.14) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(135deg,transparent 4%,#000 58%,transparent 100%)}
+.purpose-card__grid::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(155deg,transparent 0 46px,rgba(235,235,238,.18) 47px,transparent 48px)}
+.purpose-card__nodes{position:absolute;inset:16% 12% 24%;opacity:.82}
+.purpose-card__nodes::before,.purpose-card__nodes::after{content:"";position:absolute;left:12%;right:8%;top:47%;height:1px;background:linear-gradient(90deg,transparent,#e5e5e8 20%,#fff 52%,transparent 92%);box-shadow:0 -56px 0 rgba(210,210,214,.25),0 61px 0 rgba(210,210,214,.2);transform:rotate(-17deg)}
+.purpose-card__nodes::after{left:29%;right:22%;top:14%;height:78%;width:1px;background:linear-gradient(180deg,transparent,#e5e5e8 30%,#fff 58%,transparent);box-shadow:46px 0 0 rgba(210,210,214,.25),-52px 0 0 rgba(210,210,214,.16);transform:rotate(24deg)}
+.purpose-card__nodes i{position:absolute;width:7px;height:7px;border:1px solid #fff;border-radius:50%;background:#e5e5e8;box-shadow:0 0 0 5px rgba(255,255,255,.08),0 0 18px rgba(255,255,255,.45)}
+.purpose-card__nodes i:nth-child(1){left:8%;top:42%}.purpose-card__nodes i:nth-child(2){left:29%;top:13%}.purpose-card__nodes i:nth-child(3){left:49%;top:58%}.purpose-card__nodes i:nth-child(4){right:22%;top:30%}.purpose-card__nodes i:nth-child(5){right:5%;bottom:8%}
+.purpose-card__front-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:10px}.purpose-card__eyebrow{color:#fff;font-size:.72rem;letter-spacing:.16em;font-weight:800}.purpose-card__front strong,.purpose-card__back strong{font-size:clamp(1.75rem,3.4vw,3.1rem);line-height:1.02;letter-spacing:-.04em}.purpose-card__prompt{margin-top:18px;color:#d7d7da;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}.purpose-card__prompt span{font-size:1rem;margin-left:5px}
+.purpose-card__back{align-items:flex-start;justify-content:center;opacity:0;transform:scale(1.06);clip-path:inset(0 0 0 100%);background:linear-gradient(145deg,#292a2d,#101011 68%)}
+.purpose-card--mission .purpose-card__back{background:linear-gradient(145deg,#333438,#101011 68%)}
+.purpose-card__back::before{content:"";position:absolute;inset:18px;border:1px solid rgba(231,231,235,.1);border-radius:11px;pointer-events:none}.purpose-card__back>*{position:relative;z-index:1}.purpose-card__back strong{margin-top:12px}.purpose-card__rule{width:54px;height:2px;margin:22px 0 17px;background:linear-gradient(90deg,#fff,transparent)}.purpose-card__copy{max-width:570px;color:#d2d2d6;font-size:clamp(.95rem,1.25vw,1.12rem);line-height:1.7}.purpose-card__back .purpose-card__prompt{margin-top:28px}
+.purpose-card.is-revealed .purpose-card__front{opacity:0;transform:scale(.92);clip-path:inset(0 100% 0 0)}.purpose-card.is-revealed .purpose-card__back{opacity:1;transform:scale(1);clip-path:inset(0)}
+@media(max-width:820px){.purpose-section__heading{margin-bottom:24px}.purpose-grid{grid-template-columns:1fr;gap:14px}.purpose-card{min-height:330px}}
+@media(max-width:520px){.purpose-section__heading h2{font-size:clamp(1.8rem,8vw,2.45rem)}.purpose-card{min-height:350px;border-radius:14px}.purpose-card__front,.purpose-card__back{padding:23px}.purpose-card__copy{font-size:.9rem;line-height:1.6}.purpose-card__back .purpose-card__prompt{margin-top:20px}}
+@media(prefers-reduced-motion:reduce){.purpose-card,.purpose-card__front,.purpose-card__back,.purpose-card__front::after{transition:none!important}}
+
 /* Full-screen supplied artwork for the Solutions, Work, About and Contact page heroes. */
 .hero--image{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:100vh;min-height:100svh;padding:clamp(126px,17svh,174px) var(--pad) clamp(64px,9svh,96px);background-position:center;background-size:cover;background-repeat:no-repeat;color:#fff;isolation:isolate}
 .hero--image::before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(8,11,15,.2),transparent 68%);pointer-events:none}
@@ -436,6 +466,8 @@ html,body{overflow-x:clip}
 .contact-form__choice legend{margin-bottom:6px;font-size:.8rem;font-weight:500;color:var(--ink)}
 .contact-form__counter{text-align:right}
 .contact-form__success{margin:12px 0 0;color:#117a3d!important}
+.contact-form__error{margin:12px 0 0;color:#b42318!important}
+.contact-form__submit .btn:disabled{cursor:wait;opacity:.65;transform:none;box-shadow:none}
 
 /* About: two equal portrait cards with a consistent crop and metadata baseline. */
 .about-team-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:clamp(12px,1.8vw,22px)}
@@ -448,15 +480,16 @@ html,body{overflow-x:clip}
 @media(max-width:350px){.about-team-grid{grid-template-columns:1fr}.about-team-grid .person img.person__portrait{aspect-ratio:1/1.05}}
 
 /* Glass contact dialog, isolated from the underlying route and sized for its own scroll area. */
-.contact-modal-backdrop{position:fixed;z-index:1000;inset:0;display:grid;place-items:center;overflow-y:auto;overscroll-behavior:contain;padding:max(14px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom));background:rgba(7,10,15,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:contact-modal-fade .2s ease-out}
-.contact-modal{position:relative;width:min(760px,100%);max-height:min(92svh,860px);overflow-y:auto;overscroll-behavior:contain;padding:clamp(24px,4vw,44px);border:1px solid rgba(239,243,249,.25);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.035) 42%),rgba(19,24,32,.92);color:#f5f7fa;box-shadow:0 32px 100px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.2);backdrop-filter:blur(28px) saturate(145%);-webkit-backdrop-filter:blur(28px) saturate(145%)}
+.contact-modal-backdrop{position:fixed;z-index:1000;inset:0;display:grid;place-items:center;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;padding:max(14px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom));background:rgba(7,10,15,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:contact-modal-fade .2s ease-out}
+.contact-modal-backdrop::-webkit-scrollbar{display:none;width:0;height:0}
+.contact-modal{position:relative;width:min(760px,100%);max-height:min(calc(100svh - 28px),860px);overflow-y:auto;overscroll-behavior:contain;padding:clamp(24px,4vw,44px);border:1px solid rgba(239,243,249,.25);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.035) 42%),rgba(19,24,32,.92);color:#f5f7fa;box-shadow:0 32px 100px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.2);backdrop-filter:blur(28px) saturate(145%);-webkit-backdrop-filter:blur(28px) saturate(145%);touch-action:pan-y;scrollbar-gutter:stable}
 .contact-modal__close{position:absolute;top:16px;right:16px;display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid rgba(239,243,249,.2);border-radius:50%;background:rgba(255,255,255,.08);color:#f5f7fa;cursor:pointer;transition:background .2s ease,border-color .2s ease,transform .2s ease}
 .contact-modal__close:hover{transform:rotate(4deg);border-color:rgba(255,255,255,.48);background:rgba(255,255,255,.15)}
 .contact-modal__close svg{width:19px;height:19px}
 .contact-modal__eyebrow{margin:0 52px 12px 0;color:#c2cad4;font-size:.68rem;letter-spacing:.17em}
 .contact-modal h2{max-width:620px;margin:0 46px 10px 0;color:#fff;font-size:clamp(1.9rem,4.4vw,2.65rem);line-height:1.08;letter-spacing:-.035em}
 .contact-modal__description{margin:0;color:rgba(235,239,245,.76);font-size:.92rem;line-height:1.55}
-.contact-modal .contact-form-fields{gap:15px;margin-top:24px}
+.contact-modal .contact-form-fields{gap:13px;margin-top:20px}
 .contact-modal .contact-form-fields label,.contact-modal .contact-form__choice legend{color:#f1f3f6}
 .contact-modal .contact-form__choice legend .sm{color:rgba(235,239,245,.65)}
 .contact-modal .contact-form-fields input[type=text],.contact-modal .contact-form-fields input[type=email],.contact-modal .contact-form-fields textarea{border-color:rgba(231,236,244,.35);background:rgba(250,251,253,.96);color:#161b23}
@@ -466,6 +499,7 @@ html,body{overflow-x:clip}
 .contact-modal .contact-form-fields .rad label{font-size:.76rem;line-height:1.35}
 .contact-modal .contact-form__counter{color:rgba(235,239,245,.68)}
 .contact-modal .contact-form__success{color:#b9f2cd!important}
+.contact-modal .contact-form__submit{margin-top:-4px}
 .contact-modal__close:focus-visible,.contact-modal a:focus-visible,.contact-modal button:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @keyframes contact-modal-fade{from{opacity:0}to{opacity:1}}
 @media(max-width:820px){header .nav-lets-talk{display:inline-flex;min-height:38px;padding:8px 12px;font-size:.76rem;white-space:nowrap}}
@@ -473,7 +507,9 @@ html,body{overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.contact-modal-backdrop,.contact-modal__close{animation:none;transition:none}}
 
 /* Keep the enquiry dialog independently scrollable on touch devices and short viewports. */
-.contact-modal{min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-gutter:stable}
+.contact-modal{min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.contact-modal::-webkit-scrollbar{display:none;width:0;height:0}
+@media(max-height:760px) and (min-width:561px){.contact-modal{padding:22px 30px}.contact-modal .contact-form-fields{gap:10px;margin-top:14px}.contact-modal textarea{min-height:82px}.contact-modal h2{font-size:clamp(1.75rem,4vw,2.3rem)}.contact-modal__description{font-size:.84rem}}
 @media(max-height:680px){.contact-modal-backdrop{place-items:start center}.contact-modal{max-height:calc(100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px)}}
 .about-team-grid .person__details{min-height:126px;gap:6px}
 .person__social{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px}

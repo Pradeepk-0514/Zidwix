@@ -1,3 +1,4 @@
+import { useState, type ReactNode } from 'react'
 import { Btn, Hero, ReferenceCta, Ico } from '../components/ui'
 import { Github, Linkedin, Link2 } from 'lucide-react'
 
@@ -7,10 +8,30 @@ const TEAM = [
   { name: 'Darshan G', role: 'Co-Founder & Developer', image: '/img/darshan.png', linkedin: 'https://www.linkedin.com/in/darshan-g-5923b7291/', github: 'https://github.com/Darsh200618' },
 ]
 
+function PurposeCard({ variant, eyebrow, title, image, children }: { variant: 'vision' | 'mission'; eyebrow: string; title: string; image: string; children: ReactNode }) {
+  const [revealed, setRevealed] = useState(false)
+  return (
+    <button type="button" className={`purpose-card purpose-card--${variant}${revealed ? ' is-revealed' : ''}`} aria-pressed={revealed} onClick={() => setRevealed(value => !value)}>
+      <span className="purpose-card__front" aria-hidden={revealed}>
+        <img className="purpose-card__cover" src={image} alt="" aria-hidden="true" />
+        <span className="purpose-card__grid" aria-hidden="true" />
+        <span className="purpose-card__nodes" aria-hidden="true"><i /><i /><i /><i /><i /></span>
+        <span className="purpose-card__front-copy"><span className="purpose-card__eyebrow">{eyebrow}</span><strong>{title}</strong></span>
+      </span>
+      <span className="purpose-card__back" aria-hidden={!revealed}>
+        <span className="purpose-card__eyebrow">{eyebrow}</span>
+        <strong>{title}</strong>
+        <span className="purpose-card__rule" aria-hidden="true" />
+        <span className="purpose-card__copy">{children}</span>
+      </span>
+    </button>
+  )
+}
+
 export default function About() {
   return (<>
     <Hero eyebrow="About Zidwix" title="Technology with purpose." lead="We’re a team of creators, problem-solvers and builders. Zidwix exists to turn real business challenges into practical technology — websites, automation and data solutions that make a difference." actions={<><Btn to="/solutions">Our Solutions</Btn><Btn to="/contact" variant="ghost">Get in Touch</Btn></>} image="/img/about-hero.webp" />
-    <section><div className="split about-exists-layout"><div><div className="eyebrow">Why Zidwix exists</div><h2>Technology should solve problems, not create more of them.</h2><p className="lead">We focus on what your business actually needs — not technology for the sake of technology.</p></div><img src="/img/about-why.webp" alt="A modern business workspace using practical technology and analytics" loading="lazy" decoding="async" /></div></section>
+    <section className="purpose-section"><div className="purpose-section__heading"><div className="eyebrow">Why Zidwix exists</div><h2>Two commitments guide everything we build.</h2></div><div className="purpose-grid"><PurposeCard variant="vision" eyebrow="OUR DECISION" title="Our Vision" image="/img/s1-hd.webp">A future where technology moves every business forward. To become a trusted technology partner, making businesses smarter, more efficient, and ready for the future.</PurposeCard><PurposeCard variant="mission" eyebrow="OUR PURPOSE" title="Our Mission" image="/img/s2-hd.webp">Turning business challenges into practical technology solutions. We build digital products, intelligent automation, and data-driven solutions that simplify operations and create meaningful business impact.</PurposeCard></div></section>
     <section><div className="eyebrow">Our philosophy</div><h2>Built on practical thinking.</h2><p className="lead" style={{ marginBottom: 34 }}>We believe in simple ideas, clear processes and technology that actually works for your business.</p>
       <div className="grid c4">{P.map(([icon, title, description]) => <div className="rv" key={title}>{icon === 'link' ? <span className="ico"><Link2 className="i" /></span> : <Ico n={icon} />}<h3>{title}</h3><p className="sm" style={{ marginTop: 8 }}>{description}</p></div>)}</div></section>
     <section><div className="split about-team-layout"><div><div className="eyebrow">The minds behind Zidwix</div><h2>A small team with big ideas.</h2><p className="lead">We’re a focused team of developers and problem-solvers, passionate about building technology that helps businesses grow.</p><Btn to="/contact">Meet Our Team</Btn></div>
