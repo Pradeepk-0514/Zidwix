@@ -1,102 +1,156 @@
-type ApiRequest = {
-  method?: string
-  body?: unknown
-}
 
-type ApiResponse = {
-  status: (code: number) => ApiResponse
-  json: (payload: unknown) => void
-  setHeader: (name: string, value: string) => void
-  end: () => void
-}
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 
-type Enquiry = {
-  name?: unknown
-  email?: unknown
-  company?: unknown
-  need?: unknown
-  budget?: unknown
-  message?: unknown
-}
+const RESEND_API = 'https://api.resend.com/emails'
 
-const recipient = 'hello@zidwix.com'
-
-function text(value: unknown, maxLength: number) {
-  return String(value ?? '').trim().slice(0, maxLength)
-}
-
-function escapeHtml(value: string) {
-  return value.replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character] ?? character)
-}
-
-export default async function handler(req: ApiRequest, res: ApiResponse) {
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Allow', 'POST, OPTIONS')
-    res.status(204).end()
-    return
-  }
+export default async function handler(
+  req: VercelRequest,
+  res: VercelResponse,
+) {
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST, OPTIONS')
-    res.status(405).json({ error: 'Method not allowed.' })
-    return
-  }
-
-  let payload: Enquiry
-  try {
-    payload = (typeof req.body === 'string' ? JSON.parse(req.body) : req.body ?? {}) as Enquiry
-  } catch {
-    res.status(400).json({ error: 'Invalid request body.' })
-    return
-  }
-  const name = text(payload.name, 120)
-  const email = text(payload.email, 240)
-  const company = text(payload.company, 160)
-  const need = text(payload.need, 160)
-  const budget = text(payload.budget, 120)
-  const message = text(payload.message, 4000)
-
-  if (!name || !message || !/^\S+@\S+\.\S+$/.test(email)) {
-    res.status(400).json({ error: 'Please provide a valid name, email, and project description.' })
-    return
+    res.setHeader('Allow', 'POST')
+    return res.status(405).json({
+      error: 'Method not allowed',
+    })
   }
 
   const apiKey = process.env.RESEND_API_KEY
   const from = process.env.RESEND_FROM
+
   if (!apiKey || !from) {
-    res.status(503).json({ error: 'Email delivery is not configured yet. Please use the pre-filled email draft.' })
-    return
+    return res.status(503).json({
+      error: 'Email delivery is not configured.',
+    })
   }
 
-  const subject = `Website enquiry from ${name}`
-  const details = [
-    ['Name', name],
-    ['Business email', email],
-    ['Company / Business', company || 'Not provided'],
-    ['What they need', need || 'Not selected'],
-    ['Estimated budget', budget || 'Not specified'],
-  ] as const
-  const textBody = [
-    'New enquiry from the Zidwix website',
-    '',
-    ...details.map(([label, value]) => `${label}: ${value}`),
-    '',
-    'Project details:',
+  const {
+    name,
+    email,
+    company = '',
+    need,
+    budget = 'Not specified',
     message,
-  ].join('\n')
-  const htmlBody = `<h2>New enquiry from the Zidwix website</h2><dl>${details.map(([label, value]) => `<dt><strong>${escapeHtml(label)}</strong></dt><dd>${escapeHtml(value)}</dd>`).join('')}</dl><h3>Project details</h3><p>${escapeHtml(message).replace(/\n/g, '<br />')}</p>`
+  } = req.body ?? {}
+
+  const cleanName = String(name ?? '').trim()
+  const cleanEmail = String(email ?? '').trim()
+  const cleanCompany = String(company ?? '').trim()
+  const cleanNeed = String(need ?? '').trim()
+  const cleanBudget = String(budget ?? '').trim()
+  const cleanMessage = String(message ?? '').trim()
+
+  if (
+    !cleanName ||
+    !/^\S+@\S+\.\S+$/.test(cleanEmail) ||
+    !cleanNeed ||
+    !cleanMessage ||
+    cleanName.length > 100 ||
+    cleanEmail.length > 254 ||
+    cleanCompany.length > 150 ||
+    cleanMessage.length > 500
+  ) {
+    return res.status(400).json({
+      error: 'Please check the submitted enquiry details.',
+    })
+  }
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
+    // 1. Send enquiry notification to Zidwix.
+
+    const enquiry = await fetch(RESEND_API, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from, to: [recipient], reply_to: email, subject, text: textBody, html: htmlBody }),
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: ['hello@zidwix.com'],
+        reply_to: cleanEmail,
+        subject: `Website enquiry from ${cleanName}`,
+        text: [
+          'New enquiry from the Zidwix website',
+          '',
+          `Name: ${cleanName}`,
+          `Business email: ${cleanEmail}`,
+          `Company / Business: ${cleanCompany || 'Not provided'}`,
+          `What do you need?: ${cleanNeed}`,
+          `Estimated budget: ${cleanBudget}`,
+          '',
+          'Project details:',
+          cleanMessage,
+        ].join('\n'),
+      }),
     })
-    if (!response.ok) {
-      res.status(502).json({ error: 'The enquiry service could not deliver the message. Please use the pre-filled email draft.' })
-      return
+
+    const enquiryResult = await enquiry.json()
+
+    console.log('Enquiry HTTP status:', enquiry.status)
+    console.log('Enquiry response:', enquiryResult)
+
+    if (!enquiry.ok) {
+      console.error('Resend enquiry error:', enquiryResult)
+
+      return res.status(502).json({
+        error: 'We could not deliver your enquiry. Please try again.',
+      })
     }
-    res.status(200).json({ ok: true })
-  } catch {
-    res.status(502).json({ error: 'The enquiry service could not be reached. Please use the pre-filled email draft.' })
+
+    // 2. Send automatic acknowledgement to the client.
+
+    const acknowledgement = await fetch(RESEND_API, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: [cleanEmail],
+        reply_to: 'hello@zidwix.com',
+        subject: 'We received your enquiry – Zidwix',
+        text: [
+          `Hi ${cleanName},`,
+          '',
+          'Thank you for contacting Zidwix.',
+          'We have received your project enquiry and will review the details.',
+          'Our team will get back to you within 24 hours.',
+          '',
+          'Regards,',
+          'Zidwix Team',
+          'hello@zidwix.com',
+        ].join('\n'),
+      }),
+    })
+
+    const acknowledgementResult = await acknowledgement.json()
+
+    console.log(
+      'Acknowledgement HTTP status:',
+      acknowledgement.status,
+    )
+    console.log(
+      'Acknowledgement response:',
+      acknowledgementResult,
+    )
+
+    if (!acknowledgement.ok) {
+      console.error(
+        'Resend acknowledgement error:',
+        acknowledgementResult,
+      )
+    }
+
+    return res.status(200).json({
+      success: true,
+      acknowledgementSent: acknowledgement.ok,
+    })
+
+  } catch (error) {
+    console.error('Contact API error:', error)
+
+    return res.status(500).json({
+      error: 'Something went wrong. Please try again.',
+    })
   }
 }
