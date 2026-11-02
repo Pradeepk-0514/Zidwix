@@ -43,7 +43,7 @@ export const Footer = () => {
     <div className="footer-connect">
       <h4>LET’S TALK</h4>
       <p>Have a challenge to solve? Tell us what you’re working on.</p>
-      <Link className="footer-contact-link" to="/contact">Contact Zidwix <ArrowRight className="i" /></Link>
+      <a className="footer-email" href="mailto:hello@zidwix.com"> hello@zidwix.com</a>
       <a className="footer-social" href="https://www.linkedin.com/company/zidwix/" target="_blank" rel="noreferrer" aria-label="Zidwix on LinkedIn"><Linkedin className="i" /><span>LinkedIn</span><span aria-hidden="true">↗</span></a>
     </div>
   </div>
