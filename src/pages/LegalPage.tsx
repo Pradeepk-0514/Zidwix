@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
+import type { MouseEvent } from 'react'
+import { gmailComposeHref, openGmailCompose } from '../lib/email'
 
 type LegalPageProps = { type: 'privacy' | 'terms' }
 const updated = '30 October 2026'
+const EMAIL_HREF = gmailComposeHref()
+const openEmail = (event: MouseEvent<HTMLAnchorElement>) => { event.preventDefault(); openGmailCompose(EMAIL_HREF) }
 
 export default function LegalPage({ type }: LegalPageProps) {
   const privacy = type === 'privacy'
@@ -14,7 +18,7 @@ export default function LegalPage({ type }: LegalPageProps) {
         <p>This notice explains how information is handled when you visit the Zidwix website. It describes the website as currently implemented and is not a substitute for advice about your particular legal obligations.</p>
         <h2>Information you enter on this site</h2>
         <p>The contact form asks for your name, business email, optional business name, project category, an optional budget range, and a project description. When the form is submitted, these details are sent securely to Zidwix’s enquiry mailbox through the site’s email delivery provider so the team can respond. The visitor’s email is used as the reply-to address. If delivery is temporarily unavailable, the site offers a pre-filled email draft instead.</p>
-        <p>If you contact Zidwix by email, the information in that message is delivered to the email service you use and to the Zidwix mailbox. It may be retained as needed to respond to you and manage the conversation. You can contact <a href="mailto:hello@zidwix.com">hello@zidwix.com</a> with a privacy question or request concerning an email you sent.</p>
+        <p>If you contact Zidwix by email, the information in that message is delivered to the email service you use and to the Zidwix mailbox. It may be retained as needed to respond to you and manage the conversation. You can contact <a href={EMAIL_HREF} onClick={openEmail}>hello@zidwix.com</a> with a privacy question or request concerning an email you sent.</p>
         <h2>Technical information</h2>
         <p>Like most websites, the hosting and network services used to serve this site may process basic technical information in server or security logs, such as a request time, requested page, browser information, or IP address. The site code does not currently include analytics or advertising trackers.</p>
         <h2>Links and security</h2>
@@ -32,7 +36,7 @@ export default function LegalPage({ type }: LegalPageProps) {
         <h2>Third-party services and availability</h2>
         <p>Links to third-party websites are provided for convenience; Zidwix does not control or endorse their content or practices. The site is provided on an “as available” basis and may be changed, interrupted, or withdrawn. To the extent permitted by applicable law, Zidwix disclaims implied warranties and liability for losses arising from use of this informational website. Nothing here limits rights or liability that cannot legally be excluded.</p>
         <h2>Questions</h2>
-        <p>For questions about these terms, contact <a href="mailto:hello@zidwix.com">hello@zidwix.com</a>. These terms may be revised from time to time; the date above identifies the latest revision shown.</p>
+        <p>For questions about these terms, contact <a href={EMAIL_HREF} onClick={openEmail}>hello@zidwix.com</a>. These terms may be revised from time to time; the date above identifies the latest revision shown.</p>
       </div>}
       <Link className="btn ghost legal-back" to="/">Back to Home</Link>
     </div>

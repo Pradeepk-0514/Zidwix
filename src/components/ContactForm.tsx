@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowRight, Send } from 'lucide-react'
+import { gmailComposeHref, openGmailCompose } from '../lib/email'
 
 const NEED = ['Digital Products & Software', 'AI & Business Automation', 'Data & Intelligence', 'Not sure yet — help me decide']
 const BUDGET = ['Under ₹10,000', '₹10,000 – ₹25,000', '₹25,000+', 'Not sure yet']
@@ -64,7 +65,7 @@ export default function ContactForm({ idPrefix, className = '' }: ContactFormPro
       'Project details:',
       values.message.trim(),
     ].join('\n')
-    const href = `mailto:hello@zidwix.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const href = gmailComposeHref(subject, body)
     setDraftHref(href)
     setSubmitError('')
     setSubmitting(true)
@@ -128,7 +129,7 @@ export default function ContactForm({ idPrefix, className = '' }: ContactFormPro
       <div className="contact-form__submit">
         <button className="btn" type="submit" disabled={submitting}><Send className="i" /> {submitting ? 'Sending…' : 'Send Enquiry'} <ArrowRight className="i" /></button>
         {submitted && <p className="sm contact-form__success" role="status">Your enquiry has been sent to Zidwix. We’ll get back to you within 24 hours.</p>}
-        {submitError && <p className="sm contact-form__error" role="alert">{submitError} <a href={draftHref}>Open a pre-filled email draft instead.</a></p>}
+        {submitError && <p className="sm contact-form__error" role="alert">{submitError} <a href={draftHref} target="_blank" rel="noopener noreferrer" onClick={event => { event.preventDefault(); openGmailCompose(draftHref) }}>Open a pre-filled email draft instead.</a></p>}
       </div>
     </form>
   )
