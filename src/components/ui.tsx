@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Code2, Cpu, BarChart3, Zap, ShieldCheck, Users, Target, Settings, Mail, Linkedin, Facebook, Instagram, type LucideIcon } from 'lucide-react'
+import { ArrowRight, Code2, Cpu, BarChart3, Zap, ShieldCheck, Users, Target, Settings, Linkedin, Facebook, Instagram, MessageCircle, type LucideIcon } from 'lucide-react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import Stage from './Stage'
 import type { Kind } from './Scene'
 import { img, WHY, SV, type Project } from '../data'
-import { BUSINESS_EMAIL, gmailComposeHref } from '../lib/email'
+import { BUSINESS_EMAIL, gmailComposeHref, openGmailCompose } from '../lib/email'
 export const ICONS: Record<string, LucideIcon> = { code: Code2, cpu: Cpu, chart: BarChart3, bolt: Zap, shield: ShieldCheck, users: Users, target: Target, gear: Settings }
 export const Ico = ({ n, plain }: { n: string; plain?: boolean }) => { const I = ICONS[n] ?? Settings; return plain ? <I className="i" /> : <span className="ico"><I className="i" /></span> }
 export const Btn = ({ to, children, variant = '' }: { to: string; children: ReactNode; variant?: string }) => (<Link className={`btn ${variant}`} to={to}>{children} <ArrowRight className="i" /></Link>)
@@ -18,9 +18,8 @@ export const ReferenceCta = () => (
     <div className="cta__content"><div className="eyebrow">Have an idea? Let’s build it.</div><h2>Let’s build something that <span className="cta-word">moves</span> your business forward.</h2><p>Tell us what’s holding your business back. We’ll explore the problem with you and identify a practical next step.</p><Btn to="/contact" variant="light">Be a Part of us</Btn></div></div></section>)
 export const Why = () => (<section className="why-section"><div className="why-layout"><div className="why-intro"><div className="eyebrow">Why Zidwix</div><h2>Technology should solve problems, not create more of them.</h2><p className="lead">We focus on what your business actually needs — not technology for the sake of technology.</p></div>
     <div className="why-grid">{WHY.map((w, i) => <article className="why-card" key={w.t}><div className="why-card__top"><span className="why-card__number">0{i + 1}</span><Ico n={w.icon} plain /></div><h3>{w.t}</h3><p>{w.d}</p><span className="why-card__corner" aria-hidden="true" /></article>)}</div></div></section>)
-export const Proj = ({ p, i }: { p: Project; i: number }) => (<article className="card proj rv"><div className="th"><img className={p.img === 'w7' || p.img === 'w8' ? 'project-image--contain' : undefined} src={img(`${p.img}-hd`)} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = img(p.img) }} alt={p.title} loading="lazy" decoding="async" /></div><div className="eyebrow" style={{ marginBottom: 6 }}>0{i + 1} / {p.cat}</div><h3>{p.title}</h3><p className="sm" style={{ marginTop: 6 }}>{p.desc}</p><div className="tags">{p.tags.map(t => <span key={t}>{t}</span>)}</div></article>)
+export const Proj = ({ p, i }: { p: Project; i: number }) => (<article className="card proj rv"><div className="th"><img src={img(`${p.img}-hd`)} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = img(p.img) }} alt={p.title} loading="lazy" decoding="async" /></div><div className="eyebrow" style={{ marginBottom: 6 }}>0{i + 1} / {p.cat}</div><h3>{p.title}</h3><p className="sm" style={{ marginTop: 6 }}>{p.desc}</p><div className="tags">{p.tags.map(t => <span key={t}>{t}</span>)}</div></article>)
 const EMAIL_HREF = gmailComposeHref()
-const XLogo = () => <svg className="i x-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4 19 20M19 4 5 20" /></svg>
 export const Footer = () => {
   const footer = useRef<HTMLElement>(null)
   const [revealed, setRevealed] = useState(false)
@@ -46,13 +45,11 @@ export const Footer = () => {
     <div className="footer-connect">
       <h4>LET’S TALK</h4>
       <p>Have a challenge to solve? Tell us what you’re working on.</p>
-      <div className="footer-socials" aria-label="Zidwix social links">
-        <a className="footer-social" href={EMAIL_HREF} target="_blank" rel="noopener noreferrer" aria-label="Email Zidwix"><Mail className="i" /></a>
-        <a className="footer-social" href="https://www.linkedin.com/company/zidwix/" target="_blank" rel="noopener noreferrer" aria-label="Zidwix on LinkedIn"><Linkedin className="i" /></a>
-        <a className="footer-social" href="https://www.facebook.com/Zidwix" target="_blank" rel="noopener noreferrer" aria-label="Zidwix on Facebook"><Facebook className="i" /></a>
-        <a className="footer-social" href="https://www.instagram.com/zid.wix/" target="_blank" rel="noopener noreferrer" aria-label="Zidwix on Instagram"><Instagram className="i" /></a>
-        <a className="footer-social" href="https://x.com/ZidwixTech" target="_blank" rel="noopener noreferrer" aria-label="Zidwix on X (Twitter)"><XLogo /></a>
-      </div>
+      <a className="footer-email" href={EMAIL_HREF} target="_blank" rel="noopener noreferrer" onClick={event => { event.preventDefault(); openGmailCompose(EMAIL_HREF) }}> {BUSINESS_EMAIL}</a>
+      <a className="footer-social footer-social--linkedin" href="https://www.linkedin.com/company/zidwix/" target="_blank" rel="noreferrer" aria-label="Zidwix on LinkedIn"><Linkedin className="i" /><span>LinkedIn</span><span aria-hidden="true">↗</span></a>
+      <div className="footer-social footer-social--brand" aria-label="Zidwix on WhatsApp"><MessageCircle className="i" /><span>Whatsapp</span></div>
+      <div className="footer-social footer-social--brand" aria-label="Zidwix on Facebook"><Facebook className="i" /><span>facebook</span></div>
+      <a className="footer-social footer-social--brand" href="https://www.instagram.com/zid.wix/" target="_blank" rel="noopener noreferrer" aria-label="Zidwix on Instagram"><Instagram className="i" /><span>instagram</span></a>
     </div>
   </div>
   <div className="fb"><span>© {new Date().getFullYear()} Zidwix. All rights reserved.</span><nav className="footer-legal-links" aria-label="Legal"><Link to="/privacy-policy">Privacy Policy</Link><Link to="/terms-of-service">Terms of Service</Link></nav></div>
