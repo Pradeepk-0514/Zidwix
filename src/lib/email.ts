@@ -1,12 +1,12 @@
+const GMAIL_COMPOSE_BASE = 'https://mail.google.com/mail/u/0/?view=cm&fs=1'
 const BUSINESS_EMAIL = 'hello@zidwix.com'
 
-export function gmailComposeHref(subject = 'Project Enquiry for Zidwix', body = 'Hi Zidwix,\n\nI would like to discuss a project.') {
-  const params = new URLSearchParams({ view: 'cm', fs: '1', to: BUSINESS_EMAIL, su: subject, body })
-  return `https://mail.google.com/mail/u/0/?${params.toString()}`
+export function gmailComposeHref(subject = 'Project enquiry for Zidwix', body = 'Hi Zidwix,\n\nI would like to discuss a project.\n\n') {
+  return `${GMAIL_COMPOSE_BASE}&to=${encodeURIComponent(BUSINESS_EMAIL)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 export function openGmailCompose(href: string) {
-  // Retained for non-anchor fallback links; normal Email Us/footer links use native navigation.
+  // Open exactly one new tab. Do not fall back to navigating the current Zidwix tab.
   window.open(href, '_blank', 'noopener,noreferrer')
 }
 

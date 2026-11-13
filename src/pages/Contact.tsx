@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ArrowRight, Copy, Linkedin, Mail } from 'lucide-react'
 import { Hero, Ico } from '../components/ui'
 import ContactForm from '../components/ContactForm'
-import { BUSINESS_EMAIL, gmailComposeHref } from '../lib/email'
+import { BUSINESS_EMAIL, gmailComposeHref, openGmailCompose } from '../lib/email'
 
 const BENEFITS = [
   ['bolt', 'Quick Response', 'We usually reply within 24 hours.'],
@@ -31,7 +31,7 @@ export default function Contact() {
     <section className="contact-questions-wrap"><div className="contact-questions">
       <div className="contact-questions__copy"><div className="eyebrow contact-questions__eyebrow">Still have questions?</div><h2>Let’s connect,<br /><span>your way.</span></h2><p>Not ready to fill out the form? Reach out through one of our official channels. We’re happy to hear about your ideas and challenges.</p></div>
       <div className="contact-questions__channels" aria-label="Contact options">
-        <div className="contact-channel"><span className="contact-channel__icon"><Mail className="i" /></span><div className="contact-channel__body"><h3>Email us</h3><p>For project enquiries and business discussions.</p><div className="contact-channel__actions"><a href={EMAIL_HREF} target="_blank" rel="noopener noreferrer">{BUSINESS_EMAIL}</a><button type="button" aria-label={copied ? 'Email copied' : 'Copy email'} onClick={() => { navigator.clipboard?.writeText(BUSINESS_EMAIL); setCopied(true) }}>{copied ? 'Copied' : <Copy className="i" />}</button></div></div><a className="contact-channel__arrow" href={EMAIL_HREF} target="_blank" rel="noopener noreferrer" aria-label="Email Zidwix"><ArrowRight className="i" /></a></div>
+        <div className="contact-channel"><span className="contact-channel__icon"><Mail className="i" /></span><div className="contact-channel__body"><h3>Email us</h3><p>For project enquiries and business discussions.</p><div className="contact-channel__actions"><a href={EMAIL_HREF} target="_blank" rel="noopener noreferrer" onClick={event => { event.preventDefault(); openGmailCompose(EMAIL_HREF) }}>{BUSINESS_EMAIL}</a><button type="button" aria-label={copied ? 'Email copied' : 'Copy email'} onClick={() => { navigator.clipboard?.writeText(BUSINESS_EMAIL); setCopied(true) }}>{copied ? 'Copied' : <Copy className="i" />}</button></div></div><a className="contact-channel__arrow" href={EMAIL_HREF} target="_blank" rel="noopener noreferrer" onClick={event => { event.preventDefault(); openGmailCompose(EMAIL_HREF) }} aria-label="Email Zidwix"><ArrowRight className="i" /></a></div>
         <div className="contact-channel"><span className="contact-channel__icon"><Linkedin className="i" /></span><div className="contact-channel__body"><h3>Connect on LinkedIn</h3><p>Follow Zidwix and connect with us professionally.</p><a href="https://www.linkedin.com/company/zidwix/" target="_blank" rel="noopener noreferrer">linkedin.com/company/zidwix ↗</a></div><a className="contact-channel__arrow" href="https://www.linkedin.com/company/zidwix/" target="_blank" rel="noopener noreferrer" aria-label="Open Zidwix on LinkedIn"><ArrowRight className="i" /></a></div>
       </div>
     </div></section>
