@@ -1,7 +1,7 @@
 # ZIDWIX | AI Automation & Business Technology
 
 <p align="center">
-  <img src="public/logo.png" alt="Zidwix Logo" width="180"/>
+  <img src="public/img/zidwix-logo-dark.png" alt="Zidwix Logo" width="180"/>
 </p>
 
 <<<<<<< HEAD
